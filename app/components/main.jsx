@@ -38,6 +38,7 @@ function Main(){
             }}
             >
                 <Button
+                href="/allPosts/"
                 sx={{
                     backgroundColor:"blue",
                     color:"white",
@@ -56,8 +57,9 @@ function Main(){
                     alignItems:"center",
                     justifyContent:"center",
                 }}
+                href="/addPosts/"
                 >
-                <box-icon style={{color:"blue"}} type='solid' name='alarm-add'></box-icon>
+                <box-icon type='solid' name='alarm-add'></box-icon>
                     <Typography>ДОДАТИ ПОСТ</Typography>
                 </Button>
             </Box>

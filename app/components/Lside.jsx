@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer,List,ListItem,ListItemText,IconButton, Menu } from "@mui/material";
+import { Drawer,List,ListItem,ListItemText,IconButton, Menu, Typography } from "@mui/material";
 import 'boxicons';
 import Link from "next/link";
 function Lside(){
@@ -33,42 +33,54 @@ function Lside(){
           <List>
             <ListItem 
             sx={{
-                display:"flex",
                 cursor:"pointer",
                 display:"flex",
+                width:"100%",
+                marginTop:"25px",
+                gap:"20px",
+                justifyContent:"space-between",
                 flexDirection:"column",
             }}>
                 <Link style={{
                     display:"flex",
                     textDecoration:"none",
-                    color:"Black", //Swap
+                    color:"Black",
                     alignItems:"center",
-                    justifyContent:"start"
-                }} href={"/"}>
+                    width:"100%",
+                    gap:"30px",
+                    transition:"all 0.2s linear",
+                }}
+                sx={{
+                    '&:hover': {
+                      backgroundColor: "grey.200", // Используем цвет из палитры MUI
+                    }
+                  }} href="/">
                 <box-icon style={{display:"flex",justifyContent:"start"}} name='home' type='solid' ></box-icon>
-                Головна
+                <Typography>Головна</Typography>
                 </Link>
                 <Link style={{
                     display:"flex",
                     textDecoration:"none",
                     color:"Black", //Swap
                     alignItems:"center",
-                    justifyContent:"start",
-                    gap:"30px"
-                }} href={"/"}>
+                    justifyContent:"space-detween",
+                    width:"100%",
+                    gap:"30px",
+                }} href="/allPosts/">
                 <box-icon name='home' type='solid' ></box-icon>
-                Усі пости
+                <Typography>Усі пости</Typography>
                 </Link>
                 <Link style={{
                     display:"flex",
                     textDecoration:"none",
                     color:"Black", //Swap
                     alignItems:"center",
-                    justifyContent:"start",
-                    gap:"30px"
-                }} href={"/"}>
+                    width:"100%",
+                    justifyContent:"space-detween",
+                    gap:"30px",
+                }} href="/addPosts/">
                 <box-icon name='home' type='solid' ></box-icon>
-                Створити пост
+                <Typography>Створити пост</Typography>
                 </Link>
             </ListItem>
           </List>

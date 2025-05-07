@@ -3,7 +3,14 @@ import React from "react";
 import 'boxicons';
 import { AppBar,Box, IconButton, Toolbar, Typography } from "@mui/material";
 import Lside from "./Lside";
+import { usePathname } from "next/navigation";
 function Header() {
+    const pathname=usePathname();
+    const getTitle = () => {
+        if (pathname.startsWith('/allPosts')) return 'Усі пости';
+        if (pathname === '/addPosts') return 'Створити пост';
+        return 'DOiT MVP';
+      };
     return (
       <AppBar 
         position="static"
@@ -40,7 +47,7 @@ function Header() {
                 fontSize:"25px",
             }}
             color="inherit">
-              DOiT MVP
+              {getTitle()}
             </Typography>
           </Toolbar>
           

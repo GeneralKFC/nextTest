@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import Main from "./components/main";
-
+import Header from "./components/Header";
 export default function Home() {
   return (
     <Box 
@@ -14,5 +14,6 @@ export default function Home() {
     >
         <Main/>
     </Box>
+
   );
 }
