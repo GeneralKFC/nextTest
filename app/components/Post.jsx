@@ -1,20 +1,12 @@
 'use client'
 import { Avatar, Box, Card, CardActions, CardContent, IconButton, Modal, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ArrowBack } from "@mui/icons-material";
 import CommentIcon from '@mui/icons-material/Comment';
 import { useState } from "react";
 function Post({res,comm}){
     const [open, setOpen] = useState(false);
-    useEffect(()=>{
-    if(open){
-
-        const mass=comm.filter((el)=>el.id<5)
-        setComments(mass);
-    }
-    },[open])
-    const [comments,setComments]=useState([]);
     return(
         <Box
         sx={{
@@ -60,12 +52,6 @@ function Post({res,comm}){
                             borderBottom:"1px solid grey",
                             fontSize:"25px",
                         }}>Коментарі</Typography>
-                        {comments.map((el)=>{
-                            <Box key={el.id}>
-                            <Typography>{el.name}</Typography>
-                            <Typography>{el.body}</Typography>
-                            </Box>
-                        })}
                     </Box>
             </Modal>
             </Box>
