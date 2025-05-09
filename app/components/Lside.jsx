@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Drawer,List,ListItem,ListItemText,IconButton, Menu, Typography } from "@mui/material";
 import 'boxicons';
 import Link from "next/link";
+import { useThemeContext } from './ThemeContext';
 function Lside(){
+    const { mode, toggleTheme } = useThemeContext();
     const [isOpen,setIsOpen]=useState(false);
     const OpenDrawer=()=>{
         setIsOpen(!isOpen);
@@ -20,7 +22,7 @@ function Lside(){
         <Drawer
         PaperProps={{
             sx:{
-                backgroundColor:"white", //Swap
+                backgroundColor:mode==='light'?"white":"black",
                 justifyContent:"start",
             }
         }}
@@ -44,7 +46,7 @@ function Lside(){
                 <Link style={{
                     display:"flex",
                     textDecoration:"none",
-                    color:"Black",
+                    color:mode==='light'?"black":"white",
                     alignItems:"center",
                     width:"100%",
                     gap:"30px",
@@ -52,34 +54,34 @@ function Lside(){
                 }}
                 sx={{
                     '&:hover': {
-                      backgroundColor: "grey.200", // Используем цвет из палитры MUI
+                      backgroundColor:mode==='light'?"black":"white",
                     }
                   }} href="/">
-                <box-icon style={{display:"flex",justifyContent:"start"}} name='home' type='solid' ></box-icon>
+                <box-icon color={mode==='light'?"black":"white"} style={{display:"flex",justifyContent:"start"}} name='home' type='solid' ></box-icon>
                 <Typography>Головна</Typography>
                 </Link>
                 <Link style={{
                     display:"flex",
                     textDecoration:"none",
-                    color:"Black", //Swap
+                    color:mode==='light'?"black":"white",
                     alignItems:"center",
                     justifyContent:"space-detween",
                     width:"100%",
                     gap:"30px",
                 }} href="/allPosts/">
-                <box-icon name='home' type='solid' ></box-icon>
+                <box-icon color={mode==='light'?"black":"white"} name='home' type='solid' ></box-icon>
                 <Typography>Усі пости</Typography>
                 </Link>
                 <Link style={{
                     display:"flex",
                     textDecoration:"none",
-                    color:"Black", //Swap
+                    color:mode==='light'?"black":"white", 
                     alignItems:"center",
                     width:"100%",
                     justifyContent:"space-detween",
                     gap:"30px",
                 }} href="/addPosts/">
-                <box-icon name='home' type='solid' ></box-icon>
+                <box-icon color={mode==='light'?"black":"white"} name='home' type='solid' ></box-icon>
                 <Typography>Створити пост</Typography>
                 </Link>
             </ListItem>

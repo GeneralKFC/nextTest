@@ -2,21 +2,24 @@
 
 import { Box, Button, Typography,Icon } from "@mui/material"
 import React from "react"
-
+import { useThemeContext } from './ThemeContext';
+import { useTheme } from '@mui/material';
 function Main(){
+    const theme = useTheme();
     return(
         <Box 
         sx={{
             padding:"20px",
             display:"flex",
             flexDirection:"column",
-            background:"linear-gradient(45deg,#d2dffc 0%,#fcd2e4 100%)",
             color:"black",
+            background:theme.custom.gradientBackground , 
             marginTop:"75px",
             gap:"40px",
             textAlign:"center",
 
         }}>
+           
            <Typography 
            sx={{
             fontSize:"30px"

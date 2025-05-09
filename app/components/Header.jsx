@@ -1,23 +1,29 @@
 "use client"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import 'boxicons';
 import { AppBar,Box, IconButton, Toolbar, Typography } from "@mui/material";
 import Lside from "./Lside";
 import { usePathname } from "next/navigation";
+import { useThemeContext } from './ThemeContext';
+import CommentIcon from '@mui/icons-material/Comment';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
 function Header() {
     const pathname=usePathname();
+    const { mode, toggleTheme } = useThemeContext();
     const getTitle = () => {
         if (pathname.startsWith('/allPosts')) return 'Усі пости';
         if (pathname === '/addPosts') return 'Створити пост';
         return 'DOiT MVP';
       };
+      useEffect(()=>{
+      },[pathname]);
     return (
       <AppBar 
         position="static"
         sx={{
           boxShadow: 3,
           height: '60px',
-          p: '10px',
+          p: '20px',
           alignItems:"center",
 
         }}
@@ -36,12 +42,12 @@ function Header() {
             sx={{
               alignItems: 'center',
               gap: '30px',
-              p: 0, // Убираем стандартные отступы Toolbar
-              minHeight: 'auto', // Отключаем минимальную высоту
-              flex: 1, // Занимает доступное пространство
+              p: 0, 
+              minHeight: 'auto', 
+              flex: 1, 
             }}
           >
-            <Lside/>
+            <Lside />
             <Typography 
             sx={{
                 fontSize:"25px",
@@ -55,9 +61,12 @@ function Header() {
           sx={{
             height:"30px",
             width:"30px",
-            bgcolor:"red",
-          }}>
-            
+            alignItems:"center",
+            justifyContent:"center",
+          }}
+          onClick={toggleTheme}
+          >
+            {mode === 'light' ? <Brightness4 /> : <Brightness7 />}
           </IconButton>
         </Box>
       </AppBar>

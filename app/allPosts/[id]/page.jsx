@@ -1,4 +1,4 @@
-import Post from "@/app/components/Post";
+import Post from "../../../app/components/Post.jsx";
 
 async function IdPost(id) {
     const res=await fetch('https://jsonplaceholder.typicode.com/posts/'+ id);
