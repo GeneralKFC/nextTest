@@ -5,8 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ArrowBack } from "@mui/icons-material";
 import CommentIcon from '@mui/icons-material/Comment';
 import { useState } from "react";
-function Post({res,comm}){
-    const [open, setOpen] = useState(false);
+function Post({res}){
     return(
         <Box
         sx={{
@@ -14,47 +13,6 @@ function Post({res,comm}){
             height:"auto",
             padding:"20px 150px 0px 150px",
         }}>
-            <Box
-            sx={{
-                display:"flex",
-                position:"absolute",
-                top:"12px",
-                right:"60px",
-            }}
-            onClick={()=>setOpen(true)}
-            >
-                <IconButton>
-                    <CommentIcon>
-                    </CommentIcon>
-                </IconButton>
-            </Box>
-            <Box>
-            <Modal
-            open={open}
-            onClose={() => setOpen(false)}
-            >
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        boxShadow: 24,
-                        p: 4,
-                        borderRadius: 2,
-
-                    }}>
-                        <Typography
-                        sx={{
-                            display:"flex",
-                            borderBottom:"1px solid grey",
-                            fontSize:"25px",
-                        }}>Коментарі</Typography>
-                    </Box>
-            </Modal>
-            </Box>
             <Card
             sx={{
                 display:"flex",

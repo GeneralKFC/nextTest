@@ -1,139 +1,115 @@
 'use client'
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import 'boxicons';
-import { AppBar,Box, IconButton, Toolbar, Typography, Modal } from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, Typography, Modal } from "@mui/material";
 import Lside from "./Lside";
 import { usePathname } from "next/navigation";
 import { useThemeContext } from './ThemeContext';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
-function Header({comm}) {
-    const [showComments,setShowComments]=useState(false);
-    const [openComments,setOpenComments]=useState(false);
-    const [Comments,setComments]=useState([]);
-    const pathname=usePathname();
+
+function Header() {
+    const [showComments, setShowComments] = useState(false);
+    const [openComments, setOpenComments] = useState(false);
+    const [open,setOpen]=useState(false);
+    const [Comments, setComments] = useState([]);
+    const pathname = usePathname();
     const { mode, toggleTheme } = useThemeContext();
+
     const getTitle = () => {
-        if (pathname.startsWith('/allPosts')) return 'Усі пости';
+        if (pathname.startsWith('/allPosts')){
+          return 'Усі пости';
+        } 
         if (pathname === '/addPosts') return 'Створити пост';
         return 'DOiT MVP';
-      };
-      useEffect(()=>{
-        if (pathname.includes('/allPosts/')) {
-          setShowComments(true);
-        } else {
-          setShowComments(false);
-        }
-      },[pathname]);
-      console.log(comm);
-      useEffect(()=>{
-        if(showComments&&comm){
-          const Last = pathname.split('/').pop(); 
-          console.log("Last post ID:", Last);
-          const filter=comm.filter((item)=>String(item.postId)===Last);
-          console.log("Filtered comments:", filter);
-          setComments(filter);
-        }
-      },[showComments,comm,pathname]);
-    return (
-      <AppBar 
-        position="static"
-        sx={{
-          boxShadow: 3,
-          height: '60px',
-          p: '20px',
-          alignItems:"center",
+    };
 
-        }}
-      >
-        <Box 
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            height: '100%',
-            width: '100%',
-            alignItems:"center",
-          }}
-        >
-          <Toolbar 
-            sx={{
-              alignItems: 'center',
-              gap: '30px',
-              p: 0, 
-              minHeight: 'auto', 
-              flex: 1, 
-            }}
-          >
-            <Lside />
-            <Typography 
-            sx={{
-                fontSize:"25px",
-            }}
-            color="inherit">
-              {getTitle()}
-            </Typography>
-          </Toolbar>
-          
-          <IconButton 
-          sx={{
-            height:"30px",
-            width:"30px",
-            alignItems:"center",
-            justifyContent:"center",
-          }}
-          onClick={toggleTheme}
-          >
-            {mode === 'light' ? <Brightness4 /> : <Brightness7 />}
-          </IconButton>
-          {showComments&&<Box
-            sx={{
-                display:"flex",
-                position:"absolute",
-                top:"12px",
-                right:"60px",
-            }}
-            onClick={()=>setOpenComments(true)}
-            >
-                <IconButton>
-                    <CommentIcon>
-                    </CommentIcon>
+    useEffect(() => {
+      const postId = pathname.split('/').pop();
+      const fetchComments = async () => {
+        try {
+          const response = await fetch('https://jsonplaceholder.typicode.com/comments/');
+          const allComments = await response.json();
+
+          if (postId) {
+              const filteredComments = allComments.filter(item => 
+                String(item.postId) === String(postId) // ← Исправлено сравнение
+              );
+              console.log("Фильтрованные комментарии:", filteredComments);
+              setComments(filteredComments);
+          }
+        } catch (e) {
+          console.error("Ошибка загрузки:", e);
+        }
+      };
+  
+      if (pathname.includes('/allPosts/'+postId)) {
+        console.log(postId);
+        setShowComments(true);
+        fetchComments();
+      }else{
+        console.log('tyt');
+        setShowComments(false);
+      }
+      console.log(showComments);
+      console.log(openComments);
+    }, [pathname,showComments,openComments]);
+    const handleOpen=()=>{
+      console.log('tyt');
+      setOpenComments(true);
+    }
+    const handleClose=()=>{
+      setOpenComments(false);
+      console.log('tyt');
+    }
+    return (
+        <AppBar position="static" sx={{ boxShadow: 3, height: '60px', p: '20px', alignItems: "center" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%', width: '100%' }}>
+                <Toolbar sx={{ alignItems: 'center', gap: '30px', p: 0, minHeight: 'auto', flex: 1 }}>
+                    <Lside />
+                    <Typography sx={{ fontSize: "25px" }} color="inherit">
+                        {getTitle()}
+                    </Typography>
+                </Toolbar>
+
+                <IconButton sx={{ height: "30px", width: "30px" }} onClick={toggleTheme}>
+                    {mode === 'light' ? <Brightness4 /> : <Brightness7 />}
                 </IconButton>
-            </Box>}
-          {<Box>
-            {openComments&&<Modal
-            open={openComments}
-            onClose={()=>setOpenComments(false)}
-            >
-                <Box
-                    sx={{
+
+                      {showComments&&<IconButton onClick={handleOpen} sx={{display: "flex", position: "absolute", top: "12px", right: "60px" }}>
+                          <CommentIcon></CommentIcon>
+                      </IconButton>}
+
+
+                {openComments&&<Modal open={openComments} onClose={handleClose}>
+                    <Box onClick={handleClose}  sx={{
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
-                        transform: 'translate(-50%, -50%)',
                         width: 400,
+                        maxHeight:"700px",
+                        overflow:"scroll",
                         bgcolor: 'background.paper',
+                        transform: 'translate(-50%, -50%)',
                         boxShadow: 24,
                         p: 4,
                         borderRadius: 2,
-
                     }}>
-                        <Typography
-                        sx={{
-                            display:"flex",
-                            borderBottom:"1px solid grey",
-                            fontSize:"25px",
-                        }}>Коментарі</Typography>
-                        {Comments.map((item)=>
-                        <Box key={item.id}>
-                          <Typography>{item.name}waeagers</Typography>
-                          <Typography>{item.body}</Typography>
-                        </Box>)}
+                      <Typography sx={{ display: "flex", borderBottom: "1px solid grey", fontSize: "25px" }}>
+                            Коментарі
+                        </Typography>
+                        {Comments.map((item) => (
+                        <Box key={item.id} sx={{ mt: 2 }}>
+                        <Typography fontWeight="bold">{item.name}</Typography>
+                        <Typography>{item.body}</Typography>
+                        </Box>
+                        ))}
+                        efwsvs
                     </Box>
-            </Modal>}
-            </Box>}
-        </Box>
-      </AppBar>
+                </Modal>}
+            </Box>
+        </AppBar>
     );
-  }
-export default Header
+}
+
+export default Header;
