@@ -104,7 +104,6 @@ function Header() {
                         <Typography>{item.body}</Typography>
                         </Box>
                         ))}
-                        efwsvs
                     </Box>
                 </Modal>}
             </Box>

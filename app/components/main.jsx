@@ -17,9 +17,7 @@ function Main(){
             marginTop:"75px",
             gap:"40px",
             textAlign:"center",
-
         }}>
-           
            <Typography 
            sx={{
             fontSize:"30px"
